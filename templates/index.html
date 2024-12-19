@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang='en' class='notranslate' translate='no'>
+	<head>
+	    <meta name='google' content='notranslate'>
+        <meta charset='UTF-8'>
+		<title>Math Latex Formula Transcoder</title>
+	    <link rel="stylesheet" href="./static/css/katex.min.css">
+	    <script defer src="./static/js/katex.min.js"></script>
+	    <script defer src="./static/js/auto-render.min.js"></script>
+		<link rel="stylesheet" href="./static/css/custom.css" media="all">
+		<link rel="icon" href="./static/favicon-16x16.ico" type="image/x-icon" sizes="16x16">
+		<link rel="icon" href="./static/favicon-32x32.ico" type="image/x-icon" sizes="32x32">
+		<link rel="icon" href="./static/favicon-48x48.ico" type="image/x-icon" sizes="48x48">
+	</head>
+	<body>
+		<div id='main' class='h-100 w-100'>
+	    	<div id="dropFileZone" class="card rounded-0 px-5 py-3">
+    			<div class="card-header rounded-0 pl-0 pr-0 pt-0 pb-2 border-0 font-weight-bold text-left bg-transparent">
+    				<button id='reset' type='button' class='btn emoji text-center border'>🔄</button>
+
+    				<form id='toggle_view'>
+    					<label for='upload_view'>Upload</label>
+	    				<input id='upload_view' type='radio' name='view' class='btn emoji text-center border mr-0 ml-2' checked>
+
+	    				<label for='draw_view'>Draw</label>
+	    				<input id='draw_view' type='radio' name='view' class='btn emoji text-center border ml-0 mr-0'>
+	    			</form>
+    			</div>
+
+		    	<div class="card-body rounded-0 p-2 m-1 border-custom-one text-center" data-view='upload_view'>
+		    		<div id="dropFileZoneCaption">
+		    			<h2 class="text-custom-one card-title my-2">Drag & Drop</h2>
+			    		<hr class="invisible-divider mb-1 mt-1">
+			    		<span class="card-text text-custom-one">…or</span>
+			    		<label for="upload" class="site-header-btn btn btn-lg bg-custom-one text-white rounded-pill mb-1 mt-1 pl-2 pr-2 pt-1 pb-1 text-center border-0"><span class="text-white text-center font-weight-400 mr-2 pl-1 symbol">
+				      		<input id="upload" type="file" accept="image/*">
+				      		<span class="text-white text-center font-weight-400 mr-1 symbol">📂</span>Choose File
+				      	</span></label>
+			      	</div>
+		    	</div> 
+
+		    	<div class="card-body rounded-0 p-2 m-1 border-custom-one text-center" data-view='draw_view' hidden>
+		    		<h2 class="text-custom-one card-title my-2">Draw <span class='symbol'>✎﹏﹏</span> <button id='ocrDrawing' type='button' class='btn emoji text-center border ml-4'>🔎</button></h2>
+		    		<canvas class='border rounded-0'></canvas>
+		    	</div>
+
+
+		    	<div class="card-footer rounded-0 p-0 my-1 border text-left bg-transparent">
+		    		<table class='w-100'>
+		    			<thead>
+			    			<tr>
+			    				<th width="33.33%">Inline</th><th width="33.33%">LaTeX</th><th width="33.33%">DOM</th>
+			    			</tr>
+			    		</thead>
+			    		<tbody>
+			    			<tr>
+			    				<td>
+						    		<div class="transcription" data-ocr="onnx"></div>
+						    	</td>
+						    	<td>
+					    			<div class="transcription" data-ocr="latex"></div>
+					    		</td>
+					    		<td>
+						    		<div class="transcription" data-ocr="dom"></div>
+						    	</td>
+					    	</tr>
+				    	</tbody>
+			    	</div>
+		    	</div>
+	    	</div>
+		</div>
+		<script src="./static/js/main.js"></script>
+	</body>
+</html>
