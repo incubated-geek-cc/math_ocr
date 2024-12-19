@@ -145,7 +145,43 @@ document.addEventListener('DOMContentLoaded', async() => {
 		if (!file) return;
         await importFile(file);
     }); // upload file change event
-		
+
+    function selectCopyText(node) {
+        let isVal=true;
+        node = document.getElementById(node);
+        try {
+            node.select();
+            try {
+                node.setSelectionRange(0, 99999); /* For mobile devices */
+            } catch(err0) {}
+        } catch(err) {
+            isVal=false;
+            console.log(err.message);
+            if (document.body.createTextRange) {
+                const range = document.body.createTextRange();
+                range.moveToElementText(node);
+                range.select();
+            } else if (window.getSelection) {
+                const selection = window.getSelection();
+                const range = document.createRange();
+                range.selectNodeContents(node);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            } else {
+                console.warn('Could not select text in node: Unsupported browser.');
+            }
+        } finally {
+            navigator.clipboard.writeText(isVal ? node.value : node.innerText);
+        }
+    }
+
+    const copyBtns = document.querySelectorAll('.copy-btn');
+    for(let copyBtn of copyBtns) {
+    	copyBtn.addEventListener('click', (evt)=> {
+    		let eleID=evt.target.value;
+    		selectCopyText(eleID);
+    	});
+    }
 	const loadImage = (url) => new Promise((resolve, reject) => {
       const img = new Image();
       img.addEventListener('load', () => resolve(img));
@@ -207,9 +243,6 @@ document.addEventListener('DOMContentLoaded', async() => {
     	let latexTranscription = document.querySelector('.transcription[data-ocr="latex"]');
     	latexTranscription.innerText = '(Recognizing...)';
 
-    	let domTranscription = document.querySelector('.transcription[data-ocr="dom"]');
-    	domTranscription.innerText = '(Recognizing...)';
-
     	const response = await fetch(`./math_ocr/post`, {
     		method: 'POST',
     		body: JSON.stringify({
@@ -224,17 +257,11 @@ document.addEventListener('DOMContentLoaded', async() => {
 		onnxTranscription.classList.add('done');
 		onnxTranscription.innerText = inlineTxt;
 
-		
-		katex.render(inlineTxt, domTranscription, {
+
+		katex.render(inlineTxt, latexTranscription, {
 		    throwOnError: false
 		});
-		domTranscription.classList.add('done');
-
-
-		let html = katex.renderToString(inlineTxt, {
-		    throwOnError: false
-		});
-		latexTranscription.innerHTML=html;
+		// latexTranscription.innerHTML=html;
 		latexTranscription.classList.add('done');
 	}
 	

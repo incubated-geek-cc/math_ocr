@@ -1,6 +1,21 @@
 # Math OCR
-Deployed at https://math-ocr.onrender.com
-## Status: Work in Progress (WIP)
+
+## Motivation
+<p>Enable more intuitive rendering of complex mathematical notations into LaTeX typesettings without having in-depth knowledge of LaTeX syntax.</p>
+
+## Features & Functionalities
+- Open Neural Network Exchange (Onnx) OCR models at <a href='https://github.com/incubated-geek-cc/math_ocr/tree/main/models' target='_blank'>📁 models</a> were originally retrieved from <a href='https://github.com/RapidAI/RapidLaTeXOCR' target='_blank'>RapidLaTeXOCR</a> and deployed on Python Flask App
+
+- Onnx OCR models reads input graphical data of math equations and outputs:
+	- Inline notations
+	- LaTeX typesetting using <a href='https://katex.org/' target='_blank'>$\KaTeX$ library</a>
+
+## Preview
+	
+	
+
+## Demo
+<p>Python Flask Web App deployed on <a href='https://math-ocr.onrender.com' target='_blank'>Render</a>.</p>
 
 ### Purpose of .bat files
 | Filename  | Description  |

@@ -49,20 +49,19 @@
 		    		<table class='w-100'>
 		    			<thead>
 			    			<tr>
-			    				<th width="33.33%">Inline</th><th width="33.33%">LaTeX</th><th width="33.33%">DOM</th>
+			    				<th width="25%">Inline</th><th width="25%" align='right'><button type="button" value="inline-math" class="copy-btn btn border emoji">📋</button></th>
+
+			    				<th width="25%">LaTeX</th><th width="25%" align='right'><button type="button" value="output-latex" class="copy-btn btn border emoji">📋</button></th>
 			    			</tr>
 			    		</thead>
 			    		<tbody>
 			    			<tr>
-			    				<td>
-						    		<div class="transcription" data-ocr="onnx"></div>
+			    				<td colspan='2'>
+						    		<div id='inline-math' class="transcription" data-ocr="onnx"></div>
 						    	</td>
-						    	<td>
-					    			<div class="transcription" data-ocr="latex"></div>
+						    	<td colspan='2'>
+					    			<div id='output-latex' class="transcription" data-ocr="latex"></div>
 					    		</td>
-					    		<td>
-						    		<div class="transcription" data-ocr="dom"></div>
-						    	</td>
 					    	</tr>
 				    	</tbody>
 			    	</div>

@@ -103,8 +103,11 @@ body {
     overflow-y: auto;
 }
 
-table {
+table,thead,tbody,tr,th,td {
     border-collapse: collapse;
+}
+table,thead,tbody,th,td {
+    border: 1px solid #dee2e6!important
 }
 
 #dropFileZone {
