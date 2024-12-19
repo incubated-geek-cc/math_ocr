@@ -14,9 +14,9 @@ document.addEventListener('DOMContentLoaded', async() => {
 	var o = c.getContext('2d');
 
 	function reset_canvas(){
-		o.fillStyle = ' '
+		o.fillStyle = '#ffffff'
 		o.fillRect(0, 0, c.width, c.height)
-		o.strokeStyle = 'black'	
+		o.strokeStyle = '#000000'
 	}
 
 	function triggerEvent(el, type) {
