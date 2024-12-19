@@ -9,13 +9,10 @@ from flask import Flask, request, jsonify, abort, render_template
 app = Flask(__name__)
 app.logger.setLevel(logging.DEBUG)
 
-import os
-wd = os.getcwd()
-
-image_resizer_path = wd + '\\models\\image_resizer.onnx'
-encoder_path = wd + '\\models\\encoder.onnx'
-decoder_path = wd + '\\models\\decoder.onnx'
-tokenizer_json = wd + '\\models\\tokenizer.json'
+image_resizer_path = 'static/models/image_resizer.onnx'
+encoder_path = 'static/models/encoder.onnx'
+decoder_path = 'static/models/decoder.onnx'
+tokenizer_json = 'static/models/tokenizer.json'
 model = LaTeXOCR(image_resizer_path=image_resizer_path,
                 encoder_path=encoder_path,
                 decoder_path=decoder_path,
