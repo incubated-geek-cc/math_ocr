@@ -14,9 +14,7 @@ document.addEventListener('DOMContentLoaded', async() => {
 	var o = c.getContext('2d');
 
 	function reset_canvas(){
-		o.fillStyle = '#ffffff'
-		o.fillRect(0, 0, c.width, c.height)
-		o.strokeStyle = '#000000'
+		o.clearRect(0, 0, c.width, c.height);
 	}
 
 	function triggerEvent(el, type) {
@@ -185,7 +183,7 @@ document.addEventListener('DOMContentLoaded', async() => {
   	const ocrDrawing = document.querySelector('#ocrDrawing');
   	ocrDrawing.addEventListener('click', async(evt)=> {
   		let b64Str=c.toDataURL();
-  		console.log(b64Str);
+  		// console.log(b64Str);
   		await recognize_image(b64Str);
   	});
 
