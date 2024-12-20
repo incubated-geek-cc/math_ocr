@@ -146,9 +146,9 @@ document.addEventListener('DOMContentLoaded', async() => {
         await importFile(file);
     }); // upload file change event
 
-    function selectCopyText(node) {
+    function selectCopyText(node) { // inline-math
         let isVal=true;
-        node = document.getElementById(node);
+        node = document.querySelector(`#${node}`);
         try {
             node.select();
             try {
@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', async() => {
     const copyBtns = document.querySelectorAll('.copy-btn');
     for(let copyBtn of copyBtns) {
     	copyBtn.addEventListener('click', (evt)=> {
-    		let eleID=evt.target.value;
+    		let eleID=evt.currentTarget.value;
     		selectCopyText(eleID);
     	});
     }
@@ -234,6 +234,7 @@ document.addEventListener('DOMContentLoaded', async() => {
   		viewContainer.removeAttribute('hidden');
   	});
 
+  	const latexHTML=document.querySelector('#latex-html');
 
     async function recognize_image(b64Str) {
     	b64Str = b64Str.replace('data:image/png;base64,','');
@@ -257,12 +258,15 @@ document.addEventListener('DOMContentLoaded', async() => {
 		onnxTranscription.classList.add('done');
 		onnxTranscription.innerText = inlineTxt;
 
-
 		katex.render(inlineTxt, latexTranscription, {
 		    throwOnError: false
 		});
-		// latexTranscription.innerHTML=html;
 		latexTranscription.classList.add('done');
+
+		let html = katex.renderToString(inlineTxt, {
+		    throwOnError: false
+		});
+		latexHTML.value=html;
 	}
 	
 });
