@@ -28,20 +28,34 @@ document.addEventListener('DOMContentLoaded', async() => {
 	    }
 	}
 
+	function addMultipleEvents(eventsArray, targetElem, handler) {
+	  eventsArray.map((event) => targetElem.addEventListener(event, handler, false));
+	}
+
 	var drag = false, lastX, lastY;
-	c.addEventListener('mousedown', function(e){ 
+	addMultipleEvents(['mousedown', 'touchstart'],c, function(e){ 
 		drag = true; 
 		lastX = 0; 
 		lastY = 0; 
 		e.preventDefault(); 
     	e.initEvent('mousemove', false, true);
 	});
-
-	c.addEventListener('mouseup', function(e){ 
+	// c.addEventListener('mousedown', function(e){ 
+	// 	drag = true; 
+	// 	lastX = 0; 
+	// 	lastY = 0; 
+	// 	e.preventDefault(); 
+    // 	e.initEvent('mousemove', false, true);
+	// });
+	addMultipleEvents(['mouseup', 'touchend'],c, function(e){ 
 		drag = false; 
 		e.preventDefault(); 
 	});
-	c.addEventListener('mousemove', function(e){
+	// c.addEventListener('mouseup', function(e){ 
+	// 	drag = false; 
+	// 	e.preventDefault(); 
+	// });
+	addMultipleEvents(['mousemove', 'touchmove'],c, function(e){
 		e.preventDefault();
 		let rect = c.getBoundingClientRect();
 		let r = 5;
@@ -68,6 +82,33 @@ document.addEventListener('DOMContentLoaded', async() => {
 			lastY = y;
 		}
 	});
+	// c.addEventListener('mousemove', function(e){
+	// 	e.preventDefault();
+	// 	let rect = c.getBoundingClientRect();
+	// 	let r = 5;
+
+	// 	function dot(x, y){
+	// 		o.beginPath();
+	// 		o.moveTo(x + r, y);
+	// 		o.arc(x, y, r, 0, Math.PI * 2);
+	// 		o.fill();
+	// 	}
+	// 	if(drag) {
+	// 		let x = e.clientX - rect.left;
+	// 		let y = e.clientY - rect.top;
+			
+	// 		if(lastX && lastY){
+	// 			let dx = x - lastX, dy = y - lastY;
+	// 			let d = Math.sqrt(dx * dx + dy * dy);
+	// 			for(let i = 1; i < d; i += 2){
+	// 				dot(lastX + dx / d * i, lastY + dy / d * i)
+	// 			}
+	// 		}
+	// 		dot(x, y)
+	// 		lastX = x;
+	// 		lastY = y;
+	// 	}
+	// });
 	reset_canvas();		
  
     function resizeDisplay() {

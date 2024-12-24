@@ -28,6 +28,7 @@
 | requirements.txt | Contains list of Python package dependencies for application |
 | pip_freeze.bat | Extract used python packages into`requirements.txt` file |
 | pip_install_requirements.bat | Install all python packages in`requirements.txt` file  |
+| upgrade_pip.bat  | Upgrade `pip` used in virtual environment |
 | activate_env.bat | Activate virtual environment named `.env` |
 | run_app.bat | Run web app in dev environment on port 5000 |
 
