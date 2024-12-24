@@ -178,15 +178,15 @@ table,thead,tbody,th,td {
 }
 
 .unicode {
-    font-family: Cambria
+    font-family: Cambria!important
 }
 
 .emoji {
-    font-family: Segoe ui emoji
+    font-family: Segoe UI Emoji!important
 }
 
 .symbol {
-    font-family: Segoe ui symbol
+    font-family: Segoe UI Symbol!important
 }
 
 .m-0 {
@@ -804,4 +804,44 @@ fieldset:disabled a.btn {
 
 .card-footer:last-child {
   border-radius: 0 0 calc(.25rem - 1px) calc(.25rem - 1px);
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  opacity: 0%;
+  width: 120px;
+  background-color: rgba(0,0,0,.65);
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 105%;
+}
+
+.tooltip:active .tooltiptext {
+  opacity: 100%;
+  transition: opacity .2s;
+}
+
+.tooltip .tooltiptext {
+    opacity: 0%;
+    transition: opacity 4.5s;
+}
+
+p {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    margin: 0 auto;
 }

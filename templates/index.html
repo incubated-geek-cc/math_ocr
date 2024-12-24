@@ -3,7 +3,7 @@
 	<head>
 	    <meta name='google' content='notranslate'>
         <meta charset='UTF-8'>
-		<title>Math Latex Formula Transcoder</title>
+		<title>⎚-⎚ Math Latex Formula Transcoder</title>
 	    <link rel="stylesheet" href="./static/css/katex.min.css">
 	    <script defer src="./static/js/katex.min.js"></script>
 	    <script defer src="./static/js/auto-render.min.js"></script>
@@ -11,6 +11,9 @@
 		<link rel="icon" href="./static/favicon-16x16.ico" type="image/x-icon" sizes="16x16">
 		<link rel="icon" href="./static/favicon-32x32.ico" type="image/x-icon" sizes="32x32">
 		<link rel="icon" href="./static/favicon-48x48.ico" type="image/x-icon" sizes="48x48">
+		<style>
+			
+		</style>
 	</head>
 	<body>
 		<div id='main' class='h-100 w-100'>
@@ -43,31 +46,32 @@
 		    		<h2 class="text-custom-one card-title my-2">Draw <span class='symbol'>✎﹏</span> <button id='ocrDrawing' type='button' class='btn emoji text-center border ml-4'>🔎 Scan</button></h2>
 		    		<canvas class='border rounded-0'></canvas>
 		    	</div>
-
-
+				
 		    	<div class="card-footer rounded-0 p-0 my-1 border text-left bg-transparent">
 		    		<table class='w-100'>
 		    			<tr>
-		    				<th colspan='3'><button type="button" value="inline-math" class="copy-btn btn rounded-pill border emoji w-100">📋 <span class='unicode'>ⁱⁿˡⁱⁿᵉ ᵐᵃᵗʰ</span></button></th>
-
-		    				<th><button type="button" value="output-latex" class="copy-btn btn rounded-pill border emoji w-100">📋 <span class='unicode'>ᴸᵃᵀᵉˣ ᶠᵒⁿᵗ</span></button></th>
-
-		    				<th rowspan='2'><button type="button" value="latex-html" class="copy-btn btn rounded-pill border emoji w-100">📋 <span class='unicode'>ᴴᵀᴹᴸ ᵐᵃʳᵏᵘᵖ</span></button><input type='hidden' id='latex-html'/></th>
+		    				<th colspan='3' width='33.33%'>
+		    					<button type="button" value="inline-math" class="copy-btn tooltip btn rounded-pill border emoji w-100">📋 <span class='unicode'>ᴵⁿˡⁱⁿᵉ ᵐᵃᵗʰ</span><span class="tooltiptext text-nowrap text-monospace">Copied!</span></button>
+		    				</th>
+		    				<th width='33.33%'>
+		    					<button type="button" value="output-latex" class="copy-btn tooltip btn rounded-pill border emoji w-100">📋 <span class='unicode'>ᴸᵃᵀᵉˣ ᶠᵒⁿᵗ</span><span class="tooltiptext text-nowrap text-monospace">Copied!</span></button>
+		    				</th>
+		    				<th rowspan='2' width='33.33%'><button type="button" value="latex-html" class="copy-btn tooltip btn rounded-pill border emoji w-100">📋 <span class='unicode'>ᴴᵀᴹᴸ ᵐᵃʳᵏᵘᵖ</span><span class="tooltiptext text-nowrap text-monospace">Copied!</span></button> 
+		    					<input type='hidden' id='latex-html'/>
+		    				</th>
 		    			</tr>
 		    			<tr>
 		    				<td colspan='3'>
-					    		<p id='inline-math' class="transcription" data-ocr="onnx"></p>
+					    		<pre id='inline-math' class="px-2 py-3 transcription" data-ocr="onnx"></pre>
 					    	</td>
-
 					    	<td>
-				    			<p id='output-latex' class="transcription" data-ocr="latex"></p>
+				    			<pre id='output-latex' class="px-2 py-3 transcription" data-ocr="latex"></pre>
 				    		</td>
 				    	</tr>
 			    	</div>
 		    	</div>
 	    	</div>
 		</div>
-		<script src="./static/js/TouchSimulate.js"></script>
 		<script src="./static/js/main.js"></script>
 	</body>
 </html>

@@ -10,10 +10,7 @@ document.addEventListener('DOMContentLoaded', async() => {
     const dropFileZoneCaption=document.querySelector('#dropFileZoneCaption');
 
     const transcriptions=document.querySelectorAll('.transcription');
-    var c = document.querySelector('canvas');
-	var o = c.getContext('2d');
 
-	
 
 	function triggerEvent(el, type) {
 	    let e = ( ('createEvent' in document) ? document.createEvent('HTMLEvents') : document.createEventObject() );
@@ -25,52 +22,40 @@ document.addEventListener('DOMContentLoaded', async() => {
 	      el.fireEvent('on' + (e.eventType).toLowerCase(), e);
 	    }
 	}
+    
 
-	const isTouchDevice = (('ontouchstart' in window) || (navigator.MaxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
-    console.log('isTouchDevice?', isTouchDevice);
-	
-	 var touch = new TouchSimulate(c, {
-	  point: true
-	});
+    var r=5;
+	var paint = false, lastX, lastY;
 
-	var drag = false, lastX, lastY;
+    const canvasDiv = document.querySelector("[data-view='draw_view']");
+    var canvas = document.querySelector('canvas');
+	var context = canvas.getContext('2d');
+    
 
-	function reset_canvas(){
-		o.clearRect(0, 0, c.width, c.height);
+	function dot(x, y){
+		context.beginPath();
+		context.moveTo(x + r, y);
+		context.arc(x, y, r, 0, Math.PI * 2);
+		context.fill();
+	}
+    function resetCanvas() {
+	    context.clearRect(0, 0, canvas.width, canvas.height);
 	}
 
-	c.addEventListener(!isTouchDevice ? 'mousedown' : 'touchstart', function(e) {
-		if(!isTouchDevice) {
-			touch.start();
-			let cDot=document.querySelector('div[data-x="5"][data-x="5"]');
-			if(cDot!=null) {
-				cDot.remove();
-			}
-		}
-	  	drag = true; 
-		lastX = 0; 
+    canvas.addEventListener('mousedown', function (e) {
+        paint = true;
+        lastX = 0; 
 		lastY = 0; 
-		e.preventDefault(); 
-		e.initEvent(!isTouchDevice ? 'mousemove' : 'touchmove', false, true);
-	});
-	
-	c.addEventListener(!isTouchDevice ? 'mouseup' : 'touchend', function(e){ 
-		drag = false; 
-		e.preventDefault(); 
-	});
+       
+        e.preventDefault(); 
+        e.initEvent('mousemove', false, true);
+    });
 
-	c.addEventListener(!isTouchDevice ? 'mousemove' : 'touchmove', function(e){
-		e.preventDefault();
-		let rect = c.getBoundingClientRect();
-		let r = 5;
+    canvas.addEventListener('mousemove', function (e) {
+    	e.preventDefault();
 
-		function dot(x, y){
-			o.beginPath();
-			o.moveTo(x + r, y);
-			o.arc(x, y, r, 0, Math.PI * 2);
-			o.fill();
-		}
-		if(drag) {
+    	let rect = canvas.getBoundingClientRect();
+    	if(paint) {
 			let x = e.clientX - rect.left;
 			let y = e.clientY - rect.top;
 			
@@ -85,18 +70,70 @@ document.addEventListener('DOMContentLoaded', async() => {
 			lastX = x;
 			lastY = y;
 		}
-	});
-	reset_canvas();		
- 
+    });
+
+    canvas.addEventListener('mouseup', function (e) {
+        paint = false;
+		e.preventDefault();
+    });
+    canvas.addEventListener('mouseleave', function (e) {
+        paint = false;
+		e.preventDefault(); 
+    });
+
+    canvas.addEventListener('touchstart', function (e) {
+        if (e.touches.length === 1) { // Only deal with one finger
+            paint = true;
+	        lastX = 0; 
+			lastY = 0; 
+	       
+	        e.preventDefault(); 
+	        e.initEvent('touchmove', false, true);
+
+        }
+    });
+    canvas.addEventListener('touchmove', function (e) {
+        if (e.touches.length === 1) { // Only deal with one finger
+            e.preventDefault();
+
+	    	let rect = canvas.getBoundingClientRect();
+	    	if(paint) {
+				let x = e.targetTouches[0].pageX - rect.left;
+				let y = e.targetTouches[0].pageY - rect.top;
+				
+				if(lastX && lastY){
+					let dx = x - lastX, dy = y - lastY;
+					let d = Math.sqrt(dx * dx + dy * dy);
+					for(let i = 1; i < d; i += 2){
+						dot(lastX + dx / d * i, lastY + dy / d * i)
+					}
+				}
+				dot(x, y)
+				lastX = x;
+				lastY = y;
+			}
+        }
+    });
+
+    canvas.addEventListener('touchend', function (e) {
+        if (e.touches.length === 1) { // Only deal with one finger
+            paint = false;
+            e.preventDefault();
+        }
+    });
+    resetCanvas();
+
+	
     function resizeDisplay() {
     	dropFileZoneCaption['style']['margin']=`calc(${dropFileZoneCaption.parentElement.clientHeight/2}px - 0.5rem - ${dropFileZoneCaption.clientHeight/2}px)  auto`;
-    	c['style']['margin']=`auto`;
-    	
-    	c['style']['height']=`calc(${dropFileInnerZone.clientHeight*0.8}px)`; //  - 0.5rem - 0.83em - 0.5rem - 0.83em - 1.5em
-    	c['style']['width']=`calc(${dropFileInnerZone.clientWidth*0.8}px)`;
 
-    	c.height=dropFileInnerZone.clientHeight*0.8;
-    	c.width=dropFileInnerZone.clientWidth*0.8;
+    	canvas['style']['margin']=`auto`;
+    	
+    	canvas['style']['height']=`calc(${dropFileInnerZone.clientHeight*0.8}px)`; //  - 0.5rem - 0.83em - 0.5rem - 0.83em - 1.5em
+    	canvas['style']['width']=`calc(${dropFileInnerZone.clientWidth*0.8}px)`;
+
+    	canvas.height=dropFileInnerZone.clientHeight*0.8;
+    	canvas.width=dropFileInnerZone.clientWidth*0.8;
     }
 	resizeDisplay();
 
@@ -115,7 +152,7 @@ document.addEventListener('DOMContentLoaded', async() => {
 		dropFileInnerZone['style']['background-position']='';
 		dropFileInnerZone['style']['background-size']='';
 
-		reset_canvas();
+		resetCanvas();
 	});
 
     function readFileAsDataURL(file) {
@@ -236,7 +273,7 @@ document.addEventListener('DOMContentLoaded', async() => {
   	
   	const ocrDrawing = document.querySelector('#ocrDrawing');
   	ocrDrawing.addEventListener('click', async(evt)=> {
-  		let b64Str=c.toDataURL();
+  		let b64Str=canvas.toDataURL();
   		// console.log(b64Str);
   		await recognize_image(b64Str);
   	});
