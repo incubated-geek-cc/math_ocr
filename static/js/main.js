@@ -13,9 +13,7 @@ document.addEventListener('DOMContentLoaded', async() => {
     var c = document.querySelector('canvas');
 	var o = c.getContext('2d');
 
-	function reset_canvas(){
-		o.clearRect(0, 0, c.width, c.height);
-	}
+	
 
 	function triggerEvent(el, type) {
 	    let e = ( ('createEvent' in document) ? document.createEvent('HTMLEvents') : document.createEventObject() );
@@ -24,25 +22,44 @@ document.addEventListener('DOMContentLoaded', async() => {
 	      el.dispatchEvent(e);
 	    } else { 
 	      e.eventType = type;
-	      el.fireEvent('on' + e.eventType, e);
+	      el.fireEvent('on' + (e.eventType).toLowerCase(), e);
 	    }
 	}
 
+	const isTouchDevice = (('ontouchstart' in window) || (navigator.MaxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
+    console.log('isTouchDevice?', isTouchDevice);
+	
+	 var touch = new TouchSimulate(c, {
+	  point: true
+	});
+
 	var drag = false, lastX, lastY;
-	c.addEventListener((!('ontouchstart' in window)) ? 'mousedown' : 'touchstart', function(e) {
+
+	function reset_canvas(){
+		o.clearRect(0, 0, c.width, c.height);
+	}
+
+	c.addEventListener(!isTouchDevice ? 'mousedown' : 'touchstart', function(e) {
+		if(!isTouchDevice) {
+			touch.start();
+			let cDot=document.querySelector('div[data-x="5"][data-x="5"]');
+			if(cDot!=null) {
+				cDot.remove();
+			}
+		}
 	  	drag = true; 
 		lastX = 0; 
 		lastY = 0; 
 		e.preventDefault(); 
-		e.initEvent((!('ontouchstart' in window)) ? 'mousemove' : 'touchmove', false, true);
+		e.initEvent(!isTouchDevice ? 'mousemove' : 'touchmove', false, true);
 	});
 	
-	c.addEventListener((!('ontouchstart' in window)) ? 'mouseup' : 'touchend', function(e){ 
+	c.addEventListener(!isTouchDevice ? 'mouseup' : 'touchend', function(e){ 
 		drag = false; 
 		e.preventDefault(); 
 	});
 
-	c.addEventListener((!('ontouchstart' in window)) ? 'mousemove' : 'touchmove', function(e){
+	c.addEventListener(!isTouchDevice ? 'mousemove' : 'touchmove', function(e){
 		e.preventDefault();
 		let rect = c.getBoundingClientRect();
 		let r = 5;
