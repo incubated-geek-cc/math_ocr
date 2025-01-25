@@ -201,34 +201,34 @@ document.addEventListener('DOMContentLoaded', async() => {
         await importFile(file);
     }); // upload file change event
 
-    function selectCopyText(node) { // inline-math
-        let isVal=true;
-        node = document.querySelector(`#${node}`);
-        try {
-            node.select();
-            try {
-                node.setSelectionRange(0, 99999); /* For mobile devices */
-            } catch(err0) {}
-        } catch(err) {
-            isVal=false;
-            console.log(err.message);
-            if (document.body.createTextRange) {
-                const range = document.body.createTextRange();
-                range.moveToElementText(node);
-                range.select();
-            } else if (window.getSelection) {
-                const selection = window.getSelection();
-                const range = document.createRange();
-                range.selectNodeContents(node);
-                selection.removeAllRanges();
-                selection.addRange(range);
-            } else {
-                console.warn('Could not select text in node: Unsupported browser.');
-            }
-        } finally {
-            navigator.clipboard.writeText(isVal ? node.value : node.innerText);
-        }
-    }
+    function selectCopyText(nodeID) {
+		let isVal=true;
+		let node = document.querySelector(`#${nodeID}`);
+		try {
+		  node.select();
+		  try {
+		      node.setSelectionRange(0, 99999); /* For mobile devices */
+		  } catch(err0) {}
+		} catch(err) {
+		  isVal=false;
+		  console.log(err.message);
+		  if (document.body.createTextRange) {
+		      const range = document.body.createTextRange();
+		      range.moveToElementText(node);
+		      range.select();
+		  } else if (window.getSelection) {
+		      const selection = window.getSelection();
+		      const range = document.createRange();
+		      range.selectNodeContents(node);
+		      selection.removeAllRanges();
+		      selection.addRange(range);
+		  } else {
+		      console.warn('Could not select text in node: Unsupported browser.');
+		  }
+		} finally {
+		  navigator.clipboard.writeText(isVal ? node.value : node.innerText);
+		}
+  	}
 
     const copyBtns = document.querySelectorAll('.copy-btn');
     for(let copyBtn of copyBtns) {
